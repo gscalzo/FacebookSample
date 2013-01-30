@@ -669,6 +669,8 @@ enum {
                  self.onLogin();
              }
          }
+         self.onLogin = nil;
+         self.onError = nil;
      }];
     [session release];
 }
