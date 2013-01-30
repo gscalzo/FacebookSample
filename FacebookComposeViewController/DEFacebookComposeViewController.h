@@ -105,4 +105,9 @@ typedef void (^DEFacebookComposeViewControllerCompletionHandler)(DEFacebookCompo
 // Adds url scheme suffix for DEFacebookComposeViewController (ignored for SLComposeViewController)
 - (id)initForceUseCustomController:(BOOL)custom urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 
+@property(nonatomic, copy)void (^onLogin)();
+@property(nonatomic, copy)void (^onError)(NSError *error);
+- (void)connectToFb;
++ (BOOL)isConnectedToFacebook;
+
 @end

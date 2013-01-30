@@ -648,27 +648,41 @@ enum {
 
 #pragma mark - Actions
 
+- (void)connectToFb
+{
+    FBSession *session = [[FBSession alloc] initWithAppID:nil
+                                              permissions:[NSArray arrayWithObjects:@"publish_stream", nil]
+                                          urlSchemeSuffix:self.urlSchemeSuffix
+                                       tokenCacheStrategy:nil];
+    
+    [FBSession setActiveSession:session];
+    [session openWithCompletionHandler:
+     ^(FBSession *session, FBSessionState state, NSError *error) {
+         if (error) {
+             if (self.onError) {
+                 self.onError(error);
+             }
+         } else {
+             [FBSession setActiveSession:session];
+             [self setSendButtonTitle:NSLocalizedString(@"Post",@"")];
+             if (self.onLogin) {
+                 self.onLogin();
+             }
+         }
+     }];
+    [session release];
+}
+
++ (BOOL)isConnectedToFacebook{
+    return [FBSession.activeSession isOpen];
+}
+
 - (IBAction)send
 {
     
     if (![FBSession.activeSession isOpen]) {
         
-        FBSession *session = [[FBSession alloc] initWithAppID:nil
-                                                  permissions:[NSArray arrayWithObjects:@"publish_stream", nil]
-                                              urlSchemeSuffix:self.urlSchemeSuffix
-                                           tokenCacheStrategy:nil];
-        
-        [FBSession setActiveSession:session];
-        [session openWithCompletionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             if (error) {
-//                 NSLog(@"Connection error: %@ - %@", error.localizedDescription, error.userInfo);
-             } else {
-                 [FBSession setActiveSession:session];
-                 [self setSendButtonTitle:NSLocalizedString(@"Post",@"")];
-             }
-         }];
-        [session release];
+        [self connectToFb];
         
         return;
     }
