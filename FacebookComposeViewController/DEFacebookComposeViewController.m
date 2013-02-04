@@ -784,6 +784,7 @@ enum {
 
 - (IBAction)cancel
 {
+    [self.textView resignFirstResponder];
     if (self.completionHandler) {
         self.completionHandler(DEFacebookComposeViewControllerResultCancelled);
     }
