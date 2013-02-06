@@ -6,13 +6,13 @@
 //
 //  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 //  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-//  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
-//  in the documentation and/or other materials provided with the distribution. Neither the name of the Double Encore Inc. nor the names of its 
+//  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
+//  in the documentation and/or other materials provided with the distribution. Neither the name of the Double Encore Inc. nor the names of its
 //  contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
-//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS 
-//  BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
-//  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+//  BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+//  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 //  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
@@ -35,7 +35,6 @@
 #import <Social/Social.h>
 
 static BOOL waitingForAccess = NO;
-
 
 @interface DEFacebookComposeViewController ()
 
@@ -64,7 +63,7 @@ static BOOL waitingForAccess = NO;
 
 @implementation DEFacebookComposeViewController
 
-    // IBOutlets
+// IBOutlets
 @synthesize cardView = _cardView;
 @synthesize titleLabel = _titleLabel;
 @synthesize cancelButton = _cancelButton;
@@ -81,11 +80,11 @@ static BOOL waitingForAccess = NO;
 @synthesize attachment3ImageView = _attachment3ImageView;
 @synthesize characterCountLabel = _characterCountLabel;
 
-    // Public
+// Public
 @synthesize completionHandler = _completionHandler;
 @synthesize customParameters = _customParameters;
 
-    // Private
+// Private
 @synthesize text = _text;
 @synthesize images = _images;
 @synthesize urls = _urls;
@@ -170,7 +169,7 @@ enum {
 
 - (void)dealloc
 {
-        // IBOutlets
+    // IBOutlets
     [_cardView release], _cardView = nil;
     [_titleLabel release], _titleLabel = nil;
     [_cancelButton release], _cancelButton = nil;
@@ -187,11 +186,11 @@ enum {
     [_attachment3ImageView release], _attachment3ImageView = nil;
     [_characterCountLabel release], _characterCountLabel = nil;
     
-        // Public
+    // Public
     [_completionHandler release], _completionHandler = nil;
     [_customParameters release], _customParameters = nil;
     
-        // Private
+    // Private
     [_text release], _text = nil;
     [_images release], _images = nil;
     [_urls release], _urls = nil;
@@ -202,7 +201,7 @@ enum {
     [_accountPickerView release], _accountPickerView = nil;
     [_accountPickerPopoverController release], _accountPickerPopoverController = nil;
     
-//    NSLog(@"DEALLOC DEFacebookComposeViewController");
+    //    NSLog(@"DEALLOC DEFacebookComposeViewController");
     
     [super dealloc];
 }
@@ -216,7 +215,7 @@ enum {
     
     [self setCancelButtonTitle:NSLocalizedString(@"Cancel",@"")];
     [self setSendButtonTitle:NSLocalizedString(@"Post",@"")];
-
+    
     self.view.backgroundColor = [UIColor clearColor];
     self.textViewContainer.backgroundColor = [UIColor clearColor];
     self.textView.backgroundColor = [UIColor clearColor];
@@ -234,8 +233,8 @@ enum {
     
     
     
-        // Put the attachment frames and image views into arrays so they're easier to work with.
-        // Order is important, so we can't use IB object arrays. Or at least this is easier.
+    // Put the attachment frames and image views into arrays so they're easier to work with.
+    // Order is important, so we can't use IB object arrays. Or at least this is easier.
     self.attachmentFrameViews = [NSArray arrayWithObjects:
                                  self.attachment1FrameView,
                                  self.attachment2FrameView,
@@ -248,13 +247,13 @@ enum {
                                  self.attachment3ImageView,
                                  nil];
     
-        // Now add some angle to attachments 2 and 3.
+    // Now add some angle to attachments 2 and 3.
     self.attachment2FrameView.transform = CGAffineTransformMakeRotation(degreesToRadians(-6.0f));
     self.attachment2ImageView.transform = CGAffineTransformMakeRotation(degreesToRadians(-6.0f));
     self.attachment3FrameView.transform = CGAffineTransformMakeRotation(degreesToRadians(-12.0f));
     self.attachment3ImageView.transform = CGAffineTransformMakeRotation(degreesToRadians(-12.0f));
     
-        // Mask the corners on the image views so they don't stick out of the frame.
+    // Mask the corners on the image views so they don't stick out of the frame.
     [self.attachmentImageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
         ((UIImageView *)obj).layer.cornerRadius = 3.0f;
         ((UIImageView *)obj).layer.masksToBounds = YES;
@@ -264,7 +263,7 @@ enum {
     [self.textView becomeFirstResponder];
     
     
-
+    
     
     
     [self updateAttachments];
@@ -276,9 +275,9 @@ enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
     
-        // Now let's fade in a gradient view over the presenting view.
+    
+    // Now let's fade in a gradient view over the presenting view.
     self.gradientView = [[[DEFacebookGradientView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds] autorelease];
     self.gradientView.autoresizingMask = UIViewAutoresizingNone;
     self.gradientView.transform = self.fromViewController.view.transform;
@@ -288,10 +287,10 @@ enum {
     [UIView animateWithDuration:0.3f
                      animations:^ {
                          self.gradientView.alpha = 1.0f;
-                     }];    
+                     }];
     
     self.previousStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES]; 
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
     
     [self updateFramesForOrientation:self.interfaceOrientation];
     
@@ -350,7 +349,7 @@ enum {
     if ([UIDevice de_isPhone]) {
         return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
     }
-
+    
     return YES;  // Default for iPad.
 }
 
@@ -358,7 +357,7 @@ enum {
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
 {
     [self updateFramesForOrientation:interfaceOrientation];
-
+    
     // Our fake background won't rotate properly. Just hide it.
     if (interfaceOrientation == self.presentedViewController.interfaceOrientation) {
         self.backgroundImageView.alpha = 1.0f;
@@ -376,18 +375,18 @@ enum {
 
 - (void)viewDidUnload
 {
-        // Keep:
-        //  _completionHandler
-        //  _customParameters
-        //  _text
-        //  _images
-        //  _urls
-        //  _twitterAccount
+    // Keep:
+    //  _completionHandler
+    //  _customParameters
+    //  _text
+    //  _images
+    //  _urls
+    //  _twitterAccount
     
-        // Save the text.
+    // Save the text.
     self.text = self.textView.text;
     
-        // IBOutlets
+    // IBOutlets
     self.cardView = nil;
     self.titleLabel = nil;
     self.cancelButton = nil;
@@ -404,7 +403,7 @@ enum {
     self.attachment3ImageView = nil;
     self.characterCountLabel = nil;
     
-        // Private
+    // Private
     self.attachmentFrameViews = nil;
     self.attachmentImageViews = nil;
     self.gradientView = nil;
@@ -442,17 +441,17 @@ enum {
     if ([self isPresented]) {
         return NO;
     }
-        
+    
     [self.images addObject:image];
     return YES;
 }
 
 
 - (BOOL)addImageWithURL:(NSURL *)url;
-    // Not yet impelemented.
+// Not yet impelemented.
 {
-        // We should probably just start the download, rather than saving the URL.
-        // Just save the image once we have it.
+    // We should probably just start the download, rather than saving the URL.
+    // Just save the image once we have it.
     return NO;
 }
 
@@ -485,7 +484,7 @@ enum {
 #pragma mark - Private
 
 - (void)updateFramesForOrientation:(UIInterfaceOrientation)interfaceOrientation
-{    
+{
     CGFloat buttonHorizontalMargin = 8.0f;
     CGFloat cardWidth, cardTop, cardHeight, cardHeaderLineTop, buttonTop;
     UIImage *cancelButtonImage, *sendButtonImage;
@@ -564,9 +563,9 @@ enum {
                                           self.paperClipView.frame.size.width,
                                           self.paperClipView.frame.size.height);
     
-        // We need to position the rotated views by their center, not their frame.
-        // This isn't elegant, but it is correct. Half-points are required because
-        // some frame sizes aren't evenly divisible by 2.
+    // We need to position the rotated views by their center, not their frame.
+    // This isn't elegant, but it is correct. Half-points are required because
+    // some frame sizes aren't evenly divisible by 2.
     self.attachment1FrameView.center = CGPointMake(self.cardView.bounds.size.width - 45.0f, CGRectGetMaxY(self.paperClipView.frame) - cardTop + 18.0f);
     self.attachment1ImageView.center = CGPointMake(self.cardView.bounds.size.width - 45.5, self.attachment1FrameView.center.y - 2.0f);
     
@@ -613,7 +612,7 @@ enum {
     }
     self.textView.frame = frame;
     
-        // Create a array of attachment images to display.
+    // Create a array of attachment images to display.
     NSMutableArray *attachmentImages = [NSMutableArray arrayWithArray:self.images];
     for (NSInteger index = 0; index < [self.urls count]; index++) {
         [attachmentImages addObject:[UIImage imageNamed:@"DEFacebookURLAttachment"]];
@@ -647,28 +646,31 @@ enum {
 
 
 #pragma mark - Actions
-- (void)request:(FBRequest *)request didLoad:(id)result{
-//    self.onLogin(result);
+- (void)requestAllData{
+    
+    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+        if (error) {
+            if (self.onError) {
+                self.onError(error);
+            }
+        } else {
+            if (self.onMeRetrieved) {
+                self.onMeRetrieved(user);
+            }
+        }
+    }];
+    
 }
 
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error{
-    if (self.onError) {
-        self.onError(error);
-    }
-}
 
 -(void)requestMyData{
-    if (![facebook isSessionValid]) {
+    if (![FBSession.activeSession isOpen]) {
         self.onLogin = ^{
-            [facebook requestWithGraphPath:@"me" andDelegate:self];
+            [self requestAllData];
         };
         [self connectToFb];
-//        NSArray *permissions = [[NSArray alloc] initWithObjects:
-//                                nil];
-//        [facebook authorize:permissions];
-        
     } else {
-        [facebook requestWithGraphPath:@"me" andDelegate:self];
+        [self requestAllData];
     }
     
 }
@@ -677,7 +679,7 @@ enum {
 - (void)connectToFb
 {
     FBSession *session = [[FBSession alloc] initWithAppID:nil
-                                              permissions:[NSArray arrayWithObjects:@"publish_stream", nil]
+                                              permissions:[NSArray arrayWithObjects:@"publish_stream", @"email", nil]
                                           urlSchemeSuffix:self.urlSchemeSuffix
                                        tokenCacheStrategy:nil];
     
@@ -717,7 +719,7 @@ enum {
     
     
     self.sendButton.enabled = NO;
-        
+    
     UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activity setCenter:CGPointMake(_sendButton.frame.size.width/2, _sendButton.frame.size.height/2)];
     [self setSendButtonTitle:@""];
@@ -751,7 +753,7 @@ enum {
     if ([self.customParameters count] > 0) {
         [d addEntriesFromDictionary:self.customParameters];
     }
-
+    
     // create the connection object
     FBRequestConnection *newConnection = [[[FBRequestConnection alloc] init] autorelease];
     FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession
@@ -762,7 +764,7 @@ enum {
     [newConnection addRequest:request completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (error)
         {
-//            NSLog(@"    error");
+            //            NSLog(@"    error");
             
             // remove activity
             [[[self.sendButton subviews] lastObject] removeFromSuperview];
@@ -798,8 +800,8 @@ enum {
             else {
                 [self dismissModalViewControllerAnimated:YES];
             }
-
-//            NSLog(@"   ok");
+            
+            //            NSLog(@"   ok");
         };
     }];
     
@@ -823,21 +825,21 @@ enum {
 #pragma mark - UIAlertViewDelegate
 
 + (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-    // Notice this is a class method since we're displaying the alert from a class method.
+// Notice this is a class method since we're displaying the alert from a class method.
 {
     // no op
 }
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-    // This gets called if there's an error sending the tweet.
+// This gets called if there's an error sending the tweet.
 {
     if (alertView.tag == DEFacebookComposeViewControllerNoAccountsAlert) {
         [self dismissModalViewControllerAnimated:YES];
     }
     else if (alertView.tag == DEFacebookComposeViewControllerCannotSendAlert) {
         if (buttonIndex == 1) {
-                // The user wants to try again.
+            // The user wants to try again.
             [self send];
         }
     }

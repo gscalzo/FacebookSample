@@ -6,12 +6,12 @@
 //
 //  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 //  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-//  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
-//  in the documentation and/or other materials provided with the distribution. Neither the name of the Double Encore Inc. nor the names of its 
+//  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer
+//  in the documentation and/or other materials provided with the distribution. Neither the name of the Double Encore Inc. nor the names of its
 //  contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
-//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS 
-//  BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+//  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+//  BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
 //  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 //  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
@@ -29,7 +29,7 @@
 @class DEFacebookTextView;
 
 @interface DEFacebookComposeViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate,
-UIPopoverControllerDelegate, FBRequestDelegate>
+UIPopoverControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet DEFacebookSheetCardView *cardView;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
@@ -48,7 +48,7 @@ UIPopoverControllerDelegate, FBRequestDelegate>
 @property (retain, nonatomic) IBOutlet UILabel *characterCountLabel;
 @property (assign, nonatomic) IBOutlet UIImageView *navImage;
 
-    // Public
+// Public
 - (IBAction)send;
 - (IBAction)cancel;
 
@@ -60,18 +60,18 @@ enum DEFacebookComposeViewControllerResult {
 
 typedef enum DEFacebookComposeViewControllerResult DEFacebookComposeViewControllerResult;
 
-    // Completion handler for DEFacebookComposeViewController
-typedef void (^DEFacebookComposeViewControllerCompletionHandler)(DEFacebookComposeViewControllerResult result); 
+// Completion handler for DEFacebookComposeViewController
+typedef void (^DEFacebookComposeViewControllerCompletionHandler)(DEFacebookComposeViewControllerResult result);
 
 
-    // Sets the initial text to be tweeted. Returns NO if the specified text will
-    // not fit within the character space currently available, or if the sheet
-    // has already been presented to the user.
+// Sets the initial text to be tweeted. Returns NO if the specified text will
+// not fit within the character space currently available, or if the sheet
+// has already been presented to the user.
 - (BOOL)setInitialText:(NSString *)text;
 
-    // Adds an image to the tweet. Returns NO if the additional image will not fit
-    // within the character space currently available, or if the sheet has already
-    // been presented to the user.
+// Adds an image to the tweet. Returns NO if the additional image will not fit
+// within the character space currently available, or if the sheet has already
+// been presented to the user.
 - (BOOL)addImage:(UIImage *)image;
 
 //    // Adds a URL to the tweet. Returns NO if the additional URL will not fit
@@ -79,35 +79,36 @@ typedef void (^DEFacebookComposeViewControllerCompletionHandler)(DEFacebookCompo
 //    // been presented to the user.
 //- (BOOL)addImageWithURL:(NSURL *)url;
 
-    // Removes all images from the tweet. Returns NO and does not perform an operation
-    // if the sheet has already been presented to the user. 
+// Removes all images from the tweet. Returns NO and does not perform an operation
+// if the sheet has already been presented to the user.
 - (BOOL)removeAllImages;
 
-    // Adds a URL to the tweet. Returns NO if the additional URL will not fit
-    // within the character space currently available, or if the sheet has already
-    // been presented to the user.
+// Adds a URL to the tweet. Returns NO if the additional URL will not fit
+// within the character space currently available, or if the sheet has already
+// been presented to the user.
 - (BOOL)addURL:(NSURL *)url;
 
 //    // Removes all URLs from the tweet. Returns NO and does not perform an operation
 //    // if the sheet has already been presented to the user.
 //- (BOOL)removeAllURLs;
 
-    // Specify a block to be called when the user is finished. This block is not guaranteed
-    // to be called on any particular thread.
+// Specify a block to be called when the user is finished. This block is not guaranteed
+// to be called on any particular thread.
 @property (nonatomic, copy) DEFacebookComposeViewControllerCompletionHandler completionHandler;
 
 @property (nonatomic, copy) NSDictionary *customParameters;
 
-    // Force use SLComposeViewController on iOS 6 or not
+// Force use SLComposeViewController on iOS 6 or not
 - (id)initForceUseCustomController:(BOOL)custom;
 
 // Adds url scheme suffix for DEFacebookComposeViewController (ignored for SLComposeViewController)
 - (id)initForceUseCustomController:(BOOL)custom urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 
-@property(nonatomic, copy)void (^onMeRetrieved)();
+@property(nonatomic, copy)void (^onMeRetrieved)(id me);
 @property(nonatomic, copy)void (^onLogin)();
 @property(nonatomic, copy)void (^onError)(NSError *error);
 - (void)connectToFb;
 + (BOOL)isConnectedToFacebook;
+- (void)requestMyData;
 
 @end
