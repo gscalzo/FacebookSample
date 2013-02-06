@@ -647,6 +647,32 @@ enum {
 
 
 #pragma mark - Actions
+- (void)request:(FBRequest *)request didLoad:(id)result{
+//    self.onLogin(result);
+}
+
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error{
+    if (self.onError) {
+        self.onError(error);
+    }
+}
+
+-(void)requestMyData{
+    if (![facebook isSessionValid]) {
+        self.onLogin = ^{
+            [facebook requestWithGraphPath:@"me" andDelegate:self];
+        };
+        [self connectToFb];
+//        NSArray *permissions = [[NSArray alloc] initWithObjects:
+//                                nil];
+//        [facebook authorize:permissions];
+        
+    } else {
+        [facebook requestWithGraphPath:@"me" andDelegate:self];
+    }
+    
+}
+
 
 - (void)connectToFb
 {

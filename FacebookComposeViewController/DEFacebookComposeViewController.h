@@ -23,14 +23,13 @@
 //  Modified by Vladmir on 03/09/2012.
 //  www.developers-life.com
 
-
-
+#import <FacebookSDK/FacebookSDK.h>
 
 @class DEFacebookSheetCardView;
 @class DEFacebookTextView;
 
 @interface DEFacebookComposeViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate,
-UIPopoverControllerDelegate>
+UIPopoverControllerDelegate, FBRequestDelegate>
 
 @property (retain, nonatomic) IBOutlet DEFacebookSheetCardView *cardView;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
@@ -105,6 +104,7 @@ typedef void (^DEFacebookComposeViewControllerCompletionHandler)(DEFacebookCompo
 // Adds url scheme suffix for DEFacebookComposeViewController (ignored for SLComposeViewController)
 - (id)initForceUseCustomController:(BOOL)custom urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 
+@property(nonatomic, copy)void (^onMeRetrieved)();
 @property(nonatomic, copy)void (^onLogin)();
 @property(nonatomic, copy)void (^onError)(NSError *error);
 - (void)connectToFb;
